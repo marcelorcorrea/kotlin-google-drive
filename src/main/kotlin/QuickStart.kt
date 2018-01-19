@@ -18,7 +18,7 @@ import java.util.*
 
 fun main(args: Array<String>) = runBlocking {
     val quickstart = Quickstart()
-    quickstart.start()
+    quickstart.start(args.first())
 }
 
 class Quickstart {
@@ -49,13 +49,7 @@ class Quickstart {
     }
 
 
-    suspend fun start() {
-        //        val folderId = "0B0n7M68eOEX6M3Q0VTRuUDFKejg"
-//        val folderId = "0B-ZWbNluP6bITFQ4RnYwcVk2U2M"//args[0]
-//        val folderId = "0B8Ap9EHcqvn_MjR5cFB6NFRYTlk"//args[0]
-//        https://drive.google.com/open?id=0B42vE_NdhWtRV3kzLXZZWU9CYnM
-//        val args = "0B42vE_NdhWtRV3kzLXZZWU9CYnM"//args[0]
-        val args = "https://drive.google.com/open?id=0B0lue65R4P4WVWxLdmdBVTlHb0k"
+    suspend fun start(args: String) {
         val folderId = extractIdFromUrl(args)
         println("FolderId is $folderId")
         val file = driveService.files().get(folderId).execute()
