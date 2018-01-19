@@ -63,9 +63,13 @@ class Quickstart {
             if (files == null || files.isEmpty()) {
                 println("No files found.")
             } else {
-
                 files.map {
-                    val childReference = driveService.children().get(folderId, it.id).execute()
+                    val childReference = try {
+                        driveService.children().get(folderId, it.id).execute()
+                    } catch (ex: IOException) {
+                        ex.printStackTrace()
+                        it
+                    }
                     val f = driveService.files().get(childReference.id).execute()
                     val link = file.webContentLink ?: file.alternateLink
                     async {
