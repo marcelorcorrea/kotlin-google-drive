@@ -9,7 +9,6 @@ import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.client.util.store.FileDataStoreFactory
 import com.google.api.services.drive.Drive
 import com.google.api.services.drive.DriveScopes
-import com.google.api.services.drive.model.File
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.runBlocking
 import java.io.IOException
@@ -66,32 +65,25 @@ class Quickstart {
             } else {
 
                 files.map {
+                    val childReference = driveService.children().get(folderId, it.id).execute()
+                    val f = driveService.files().get(childReference.id).execute()
                     val link = file.webContentLink ?: file.alternateLink
-                    if (link != null) {
-                        async {
-                            val f = driveService.files().get(link).execute()
-                            download(f)
-                        }
-                    } else {
-                        async {
-                            val childReference = driveService.children().get(folderId, it.id).execute()
-                            val f = driveService.files().get(childReference.id).execute()
-                            download(f)
-                        }
+                    async {
+                        download(f.title, link)
                     }
                 }.forEach { it.join() }
             }
         } else {
-            val deferred = async { download(file) }
+            val link = file.webContentLink ?: file.alternateLink
+            val deferred = async { download(file.title, link) }
             deferred.join()
         }
     }
 
-    private fun download(f: File): java.io.File {
-        val link = f.webContentLink ?: f.alternateLink
-        println("Downloading ${f.title} - $link")
+    private fun download(title: String, link: String): java.io.File {
+        println("Downloading $title - $link")
         val response = driveService.requestFactory.buildGetRequest(GenericUrl(link)).execute()
-        return response.download(DESTINY_FOLDER.format(f.title))
+        return response.download(DESTINY_FOLDER.format(title))
     }
 
 
