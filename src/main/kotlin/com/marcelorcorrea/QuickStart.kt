@@ -1,3 +1,5 @@
+package com.marcelorcorrea
+
 import com.google.api.client.auth.oauth2.Credential
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver
@@ -49,8 +51,8 @@ class Quickstart {
     }
 
 
-    suspend fun start(args: String) {
-        val folderId = extractIdFromUrl(args)
+    suspend fun start(arg: String) {
+        val folderId = extractIdFromUrl(argg)
         println("FolderId is $folderId")
         val file = driveService.files().get(folderId).execute()
         println("Title: ${file.title}")
