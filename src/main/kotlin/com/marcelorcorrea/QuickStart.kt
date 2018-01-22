@@ -52,7 +52,7 @@ class Quickstart {
 
 
     suspend fun start(arg: String) {
-        val folderId = extractIdFromUrl(argg)
+        val folderId = extractIdFromUrl(arg)
         println("FolderId is $folderId")
         val file = driveService.files().get(folderId).execute()
         println("Title: ${file.title}")
