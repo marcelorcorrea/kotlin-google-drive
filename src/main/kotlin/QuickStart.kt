@@ -20,6 +20,7 @@ fun main(args: Array<String>) = runBlocking {
     quickstart.start(args.first())
 }
 
+
 class Quickstart {
     companion object {
         /** Application name.  */
