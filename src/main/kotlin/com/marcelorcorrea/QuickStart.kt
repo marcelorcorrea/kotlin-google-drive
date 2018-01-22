@@ -19,34 +19,19 @@ import java.util.*
 
 fun main(args: Array<String>) = runBlocking {
     val quickstart = Quickstart()
-    quickstart.start(args.first())
+    for (arg in args) {
+        quickstart.start(arg)
+    }
 }
-
 
 class Quickstart {
     companion object {
-        /** Application name.  */
         private const val APPLICATION_NAME = "Google Drive Downloader"
-
-        /** Directory to store user credentials for this application.  */
         private val DATA_STORE_DIR = java.io.File(System.getProperty("user.home"), ".credentials/google-drive-downloader")
-
-        /** Global instance of the [FileDataStoreFactory].  */
         private val DATA_STORE_FACTORY: FileDataStoreFactory = FileDataStoreFactory(DATA_STORE_DIR)
-
-        /** Global instance of the JSON factory.  */
         private val JSON_FACTORY = JacksonFactory.getDefaultInstance()
-
-        /** Global instance of the HTTP transport.  */
         private val HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport()
-
         private val DESTINY_FOLDER = "${System.getProperty("user.home")}/tmp/%s"
-
-        /** Global instance of the scopes required by this quickstart.
-         *
-         * If modifying these scopes, delete your previously saved credentials
-         * at ~/.credentials/google-drive-downloader
-         */
         private val SCOPES = Arrays.asList<String>(DriveScopes.DRIVE_METADATA_READONLY)
     }
 
