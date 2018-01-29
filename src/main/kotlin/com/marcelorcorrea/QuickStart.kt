@@ -57,7 +57,7 @@ class Quickstart {
                         it
                     }
                     val f = driveService.files().get(childReference.id).execute()
-                    val link = file.webContentLink ?: file.alternateLink
+                    val link = f.webContentLink ?: f.alternateLink
                     async {
                         download(f.title, link)
                     }
