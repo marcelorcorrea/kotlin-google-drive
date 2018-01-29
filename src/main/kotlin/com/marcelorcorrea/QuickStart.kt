@@ -41,7 +41,6 @@ class Quickstart {
         println("FolderId is $folderId")
         val file = driveService.files().get(folderId).execute()
         println("Title: ${file.title}")
-        println("Description: ${file.description}")
         println("MIME type:  ${file.mimeType}")
         println("Download Url: ${file.webContentLink ?: file.alternateLink}")
 
@@ -55,7 +54,6 @@ class Quickstart {
                     val childReference = try {
                         driveService.children().get(folderId, it.id).execute()
                     } catch (ex: IOException) {
-                        ex.printStackTrace()
                         it
                     }
                     val f = driveService.files().get(childReference.id).execute()
