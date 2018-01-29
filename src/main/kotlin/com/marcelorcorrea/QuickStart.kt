@@ -116,8 +116,9 @@ class Quickstart {
         val regex = Regex("\b(https?)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]")
 
         if (url.startsWith("https://drive.google.com")) {
-            val matcher = Regex("(?<==).*\$")
-            val matchResult = matcher.find(url)
+            val matcherId = Regex("(?<==).*\$")
+            val matcherFolder = Regex("(?<=folders/).*\$")
+            val matchResult = matcherId.find(url) ?: matcherFolder.find(url)
             return matchResult?.groups?.first()?.value
         } else if (regex.find(url) != null) {
             throw IllegalArgumentException("You must provide a valid URL")
